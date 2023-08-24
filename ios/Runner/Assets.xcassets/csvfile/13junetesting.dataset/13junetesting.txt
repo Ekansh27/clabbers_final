@@ -1,0 +1,13 @@
+["AA    (Hawaiian) a volcanic rock consisting of angular blocks of lava with a very rough surface [n -S]",
+"AAH   an interjection expressing surprise [interj] / to exclaim in surprise [v -ED-ING-S]",
+"AAHED AAHto exclaim in surprise [v]",
+"AAHING    AAHto exclaim in surprise [v]",
+"AAHS  AAHto exclaim in surprise [v]",
+"AAL   (Hindi) the Indian mulberry treeaka nonialso AL [n -S]",
+"AALII (Hawaiian) a tropical tree [n -S]",
+"AALIIS    AALII(Hawaiian) a tropical tree [n]",
+"AALS  AAL(Hindi) the Indian mulberry treeaka nonialso AL [n]",
+"AARDVARK  (South African) a nocturnal insectivorous badger-sized mammal native to sub-Saharan Africa [n -S]",
+"AARDVARKS AARDVARK(South African) a nocturnal insectivorous badger-sized mammal native to sub-Saharan Africa [n]",
+"AARDWOLF  (South African) a hyena-like African mammal aka earthwolf [n AARDWOLVES]"
+]
