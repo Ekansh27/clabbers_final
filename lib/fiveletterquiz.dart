@@ -161,13 +161,30 @@ class _FiveLetterQuizState extends State<FiveLetterQuiz> {
                       Center(
                         child: Row(
                           children: [
-                            SizedBox(width: 40.0),
+                            SizedBox(width: 30.0),
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                textStyle: Theme.of(context).textTheme.labelLarge,
+                              ),
+                              child: const Text('Definitions',
+                                  style: TextStyle(fontSize: 20.0)),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => const AlertDialog(
+                                    title: const Text('Quick Guide'),
+                                    content: Text('You can check the definition of a word by pressing on it!'),
+                                  ),
+                                );
+                              },
+                            ),
                             TextButton(
                               style: TextButton.styleFrom(
                                 textStyle: Theme.of(context).textTheme.labelLarge,
                               ),
                               child: const Text('Next',
-                                  style: TextStyle(fontSize: 18.0)),
+                                  style: TextStyle(fontSize: 20.0)),
                               onPressed: () {
                                 nextWord();
                                 Navigator.of(context).pop();
@@ -227,23 +244,6 @@ class _FiveLetterQuizState extends State<FiveLetterQuiz> {
                                 }
                               },
                             ),
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                textStyle: Theme.of(context).textTheme.labelLarge,
-                              ),
-                              child: const Text('Definitions',
-                                  style: TextStyle(fontSize: 18.0)),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => const AlertDialog(
-                                    title: const Text('Quick Guide'),
-                                    content: Text('You can check the definition of a word by pressing on it!'),
-                                  ),
-                                );
-                              },
-                            ),
                           ],
                         ),
                       ),
@@ -301,6 +301,9 @@ class _FiveLetterQuizState extends State<FiveLetterQuiz> {
       _fiveletterController.value = _fiveletterController.value.copyWith(
         text: text,
       );
+      if (text.length == jumbledString.length) {
+        checkWord();
+      }
     });
   }
 
@@ -332,7 +335,7 @@ class _FiveLetterQuizState extends State<FiveLetterQuiz> {
                     fontWeight: FontWeight.bold, fontSize: 22.0)),
           ),
           Container(
-            height: 250,
+            height: MediaQuery.of(context).size.height / 5.1,
             child: Row(
               children: [
                 Expanded(
@@ -388,7 +391,7 @@ class _FiveLetterQuizState extends State<FiveLetterQuiz> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(25.0),
+            padding: const EdgeInsets.all(20.0),
             child: Row(
               children: [
                 Expanded(
@@ -410,40 +413,39 @@ class _FiveLetterQuizState extends State<FiveLetterQuiz> {
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: FloatingActionButton(
-                    heroTag: "check",
-                    tooltip: "check answer",
-                    onPressed: checkWord,
-                    child: Icon(Icons.check),
+                    tooltip: 'Go next word',
+                    heroTag: "next",
+                    onPressed: nextWord,
+                    child: Icon(Icons.skip_next),
                   ),
-                ),
-                FloatingActionButton(
-                  tooltip: 'Go next word',
-                  heroTag: "next",
-                  onPressed: nextWord,
-                  child: Icon(Icons.skip_next),
                 ),
               ], // Children of Row
             ),
           ),
-          Visibility(
-            visible: i < 19, // Change this condition based on your requirements
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '${correctGuesses.length - 1} / ${uniqueWords.length}',
-                  style: const TextStyle(fontSize: 20.0),
+          Row(
+            children: [
+              SizedBox(width: MediaQuery.of(context).size.width / 4.1),
+              Visibility(
+                visible: i < 19, // Change this condition based on your requirements
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '${correctGuesses.length - 1} / ${uniqueWords.length}',
+                      style: const TextStyle(fontSize: 22.5),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-
-          TextButton(
-            style: TextButton.styleFrom(
-              textStyle: Theme.of(context).textTheme.labelLarge,
-            ),
-            child: const Text('Reveal Answers', style: TextStyle(fontSize: 20.0),),
-            onPressed: !answersRevealed ? revealAnswers : null,
+              ),
+              SizedBox(width: 15,),
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: const Text('Reveal Answers', style: TextStyle(fontSize: 22.5),),
+                onPressed: !answersRevealed ? revealAnswers : null,
+              ),
+            ],
           ),
         ],
       ),

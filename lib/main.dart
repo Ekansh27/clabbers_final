@@ -34,10 +34,8 @@ class _SplashState extends State<Splash> {
     super.initState();
     Timer(
         const Duration(seconds: 3),
-            () =>
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => QuoteList())));
+        () => Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => QuoteList())));
   }
 
   @override
@@ -46,55 +44,65 @@ class _SplashState extends State<Splash> {
       appBar: null,
       backgroundColor: Colors.white,
       body: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            // decoration: const BoxDecoration(
-            //   gradient: LinearGradient(
-            //       begin: Alignment.topCenter,
-            //       end: Alignment(0, 1),
-            //       colors: <Color>[
-            //         Color(0xffb2d3f4),
-            //         Color(0xffb2d3f4),
-            //         Color(0xffb2d3f4),
-            //         Color(0xffb2d3f4),
-            //         Color(0xffb2d3f4),
-            //         Color(0xffecf2f8),
-            //       ],
-            //   ),
-            // ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [Image.asset(
-              'assets/images/ClabbersLogo.png',
-              fit: BoxFit.cover,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        // decoration: const BoxDecoration(
+        //   gradient: LinearGradient(
+        //       begin: Alignment.topCenter,
+        //       end: Alignment(0, 1),
+        //       colors: <Color>[
+        //         Color(0xffb2d3f4),
+        //         Color(0xffb2d3f4),
+        //         Color(0xffb2d3f4),
+        //         Color(0xffb2d3f4),
+        //         Color(0xffb2d3f4),
+        //         Color(0xffecf2f8),
+        //       ],
+        //   ),
+        // ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(bottom: 10),
+                height: 140,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/ClabbersLogo.png'),
+                  ),
+                ),
               ),
-                   const DefaultTextStyle(
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontStyle: FontStyle.normal,
-                      fontSize: 36,
-                      // color: Colors.white,
+              const DefaultTextStyle(
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontStyle: FontStyle.normal,
+                  fontSize: 36,
+                  // color: Colors.white,
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 25.0,
                     ),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 25.0,
-                        ),
-                        Text('CLABBERS', style: TextStyle(fontFamily: 'JuliusSansOne', fontWeight: FontWeight.bold)),
-                        SizedBox(
-                          height: 15.0,
-                        ),
-                        CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-                        ),
-                      ],
+                    Text('CLABBERS',
+                        style: TextStyle(
+                            fontFamily: 'JuliusSansOne',
+                            fontWeight: FontWeight.bold)),
+                    SizedBox(
+                      height: 15.0,
                     ),
-                   ),
-              ],
-            ),
+                    // CircularProgressIndicator(
+                    //   valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                    // ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          ),
-      );
+        ),
+      ),
+    );
   }
 }

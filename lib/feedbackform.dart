@@ -170,10 +170,11 @@ class _TimberState extends State<Timber> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            GestureDetector(
-                onTap: () => _launchURL,
+            Center(
+              child: GestureDetector(
+                onTap: () => _launchURL(),
                 child: const Text(
-                  'https://forms.gle/NncTnuDA1cdEwESA6',
+                  'Google Form',
                   style: TextStyle(
                     fontSize: 24,
                     decoration: TextDecoration.underline,
@@ -181,8 +182,9 @@ class _TimberState extends State<Timber> {
                   ),
                 ),
               ),
+            ),
             const SizedBox(height: 12.0,),
-            const Text('Or mail your queries to: aroraekansh2706@gmail.com', style: TextStyle(fontSize: 16.0),)
+            const Text('Or mail to: aroraekansh2706@gmail.com', style: TextStyle(fontSize: 16.0),)
           ],
         ),
       ),

@@ -129,8 +129,7 @@ class _TwoLetterQuizState extends State<TwoLetterQuiz> {
     // TODO: remove auto skip, show correct answers when not gone next
     setState(() {
       if (uniqueWords.contains(_twoletterController.text.toLowerCase())) {
-        if (!correctGuesses
-            .contains(_twoletterController.text.toUpperCase())) {
+        if (!correctGuesses.contains(_twoletterController.text.toUpperCase())) {
           correctGuesses.add(_twoletterController.text.toUpperCase());
         }
         // print(equal_length_anagrams.length);
@@ -166,7 +165,27 @@ class _TwoLetterQuizState extends State<TwoLetterQuiz> {
                             SizedBox(width: 40.0),
                             TextButton(
                               style: TextButton.styleFrom(
-                                textStyle: Theme.of(context).textTheme.labelLarge,
+                                textStyle:
+                                    Theme.of(context).textTheme.labelLarge,
+                              ),
+                              child: const Text('Definitions',
+                                  style: TextStyle(fontSize: 18.0)),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => const AlertDialog(
+                                    title: const Text('Quick Guide'),
+                                    content: Text(
+                                        'You can check the definition of a word by pressing on it!'),
+                                  ),
+                                );
+                              },
+                            ),
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                textStyle:
+                                    Theme.of(context).textTheme.labelLarge,
                               ),
                               child: const Text('Next',
                                   style: TextStyle(fontSize: 18.0)),
@@ -217,34 +236,18 @@ class _TwoLetterQuizState extends State<TwoLetterQuiz> {
                                 }
                                 if (i < 18) {
                                   i++;
-                                  currentAnagrams =
-                                      anagrammer.anagram(jumbledString.toLowerCase());
+                                  currentAnagrams = anagrammer
+                                      .anagram(jumbledString.toLowerCase());
                                   uniqueWords = currentAnagrams
                                       .where((element) =>
-                                  element.length == jumbledString.length)
+                                          element.length ==
+                                          jumbledString.length)
                                       .toSet();
                                   correctGuesses = ["CORRECT GUESSES"];
                                   incorrectGuesses = ["INCORRECT GUESSES"];
                                   // print(uniqueWords);
                                   // print(currentAnagrams);
                                 }
-                              },
-                            ),
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                textStyle: Theme.of(context).textTheme.labelLarge,
-                              ),
-                              child: const Text('Definitions',
-                                  style: TextStyle(fontSize: 18.0)),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => const AlertDialog(
-                                    title: const Text('Quick Guide'),
-                                    content: Text('You can check the definition of a word by pressing on it!'),
-                                  ),
-                                );
                               },
                             ),
                           ],
@@ -271,8 +274,11 @@ class _TwoLetterQuizState extends State<TwoLetterQuiz> {
   void revealAnswers() {
     setState(() {
       if (!answersRevealed) {
-        Set<dynamic> revealedAnswers = uniqueWords.difference(correctGuesses.toSet());
-        List<String> revealedAnswersUpperCase = revealedAnswers.map((answer) => answer.toString().toUpperCase()).toList();
+        Set<dynamic> revealedAnswers =
+            uniqueWords.difference(correctGuesses.toSet());
+        List<String> revealedAnswersUpperCase = revealedAnswers
+            .map((answer) => answer.toString().toUpperCase())
+            .toList();
 
         // Filter out the answers that are already correct guesses
         List<String> newRevealedAnswers = [];
@@ -287,7 +293,6 @@ class _TwoLetterQuizState extends State<TwoLetterQuiz> {
       }
     });
   }
-
 
   String shuffleString(String input) {
     List<String> chars = input.split('');
@@ -304,6 +309,10 @@ class _TwoLetterQuizState extends State<TwoLetterQuiz> {
       _twoletterController.value = _twoletterController.value.copyWith(
         text: text,
       );
+
+      if (text.length == jumbledString.length) {
+        checkWord();
+      }
     });
   }
 
@@ -335,43 +344,44 @@ class _TwoLetterQuizState extends State<TwoLetterQuiz> {
                     fontWeight: FontWeight.bold, fontSize: 22.0)),
           ),
           Container(
-            height: 250,
+            height: MediaQuery.of(context).size.height / 5.1,
             child: Row(
               children: [
                 Expanded(
                   child: Column(
                     children: correctGuesses
                         .map((guess) => Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text('Definition:'),
-                              content: Text(definitions[guess]!),
-                              actions: <Widget>[
-                                TextButton(
-                                  style: TextButton.styleFrom(
-                                    textStyle: Theme.of(context)
-                                        .textTheme
-                                        .labelLarge,
-                                  ),
-                                  child: const Text('OK'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
+                              padding: const EdgeInsets.all(4.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      title: const Text('Definition:'),
+                                      content: Text(definitions[guess]!),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          style: TextButton.styleFrom(
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge,
+                                          ),
+                                          child: const Text('OK'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  guess,
+                                  style: const TextStyle(fontSize: 16.0),
                                 ),
-                              ],
-                            ),
-                          );
-                        },
-                        child: Text(
-                          guess,
-                          style: const TextStyle(fontSize: 16.0),
-                        ),
-                      ),
-                    )).toList(),
+                              ),
+                            ))
+                        .toList(),
                   ),
                 ),
 
@@ -404,10 +414,10 @@ class _TwoLetterQuizState extends State<TwoLetterQuiz> {
                   child: Column(
                     children: incorrectGuesses
                         .map((guess) => Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Text(guess,
-                          style: const TextStyle(fontSize: 16.0)),
-                    ))
+                              padding: const EdgeInsets.all(4.0),
+                              child: Text(guess,
+                                  style: const TextStyle(fontSize: 16.0)),
+                            ))
                         .toList(),
                   ),
                 ),
@@ -415,7 +425,7 @@ class _TwoLetterQuizState extends State<TwoLetterQuiz> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(25.0),
+            padding: const EdgeInsets.all(20.0),
             child: Row(
               children: [
                 Expanded(
@@ -437,40 +447,43 @@ class _TwoLetterQuizState extends State<TwoLetterQuiz> {
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: FloatingActionButton(
-                    heroTag: "check",
-                    tooltip: "check answer",
-                    onPressed: checkWord,
-                    child: Icon(Icons.check),
+                    tooltip: 'Go next word',
+                    heroTag: "next",
+                    onPressed: nextWord,
+                    child: Icon(Icons.skip_next),
                   ),
-                ),
-                FloatingActionButton(
-                  tooltip: 'Go next word',
-                  heroTag: "next",
-                  onPressed: nextWord,
-                  child: Icon(Icons.skip_next),
                 ),
               ], // Children of Row
             ),
           ),
-          Visibility(
-            visible: i < 19, // Change this condition based on your requirements
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '${correctGuesses.length - 1} / ${uniqueWords.length}',
-                  style: const TextStyle(fontSize: 20.0),
+          Row(
+            children: [
+              SizedBox(width: MediaQuery.of(context).size.width / 4.1),
+              Visibility(
+                visible:
+                    i < 19, // Change this condition based on your requirements
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '${correctGuesses.length - 1} / ${uniqueWords.length}',
+                      style: const TextStyle(fontSize: 22.5),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-
-          TextButton(
-            style: TextButton.styleFrom(
-              textStyle: Theme.of(context).textTheme.labelLarge,
-            ),
-            child: const Text('Reveal Answers', style: TextStyle(fontSize: 20.0),),
-            onPressed: !answersRevealed ? revealAnswers : null,
+              ),
+              SizedBox(width: 15),
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: const Text(
+                  'Reveal Answers',
+                  style: TextStyle(fontSize: 22.5),
+                ),
+                onPressed: !answersRevealed ? revealAnswers : null,
+              ),
+            ],
           ),
         ],
       ),
