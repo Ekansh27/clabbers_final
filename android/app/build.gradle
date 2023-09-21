@@ -43,7 +43,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = '1.6.0'
+        jvmTarget = '1.8'
     }
 
     sourceSets {
@@ -82,5 +82,5 @@ flutter {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
