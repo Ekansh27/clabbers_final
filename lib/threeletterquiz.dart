@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:scrabble/scrabble.dart';
 import 'package:csv/csv.dart';
 import 'package:collection/collection.dart';
+import 'package:csv/csv_settings_autodetection.dart' as csvAuto;
 import 'dart:math';
 
 class ThreeLetterQuiz extends StatefulWidget {
@@ -48,9 +49,10 @@ class _ThreeLetterQuizState extends State<ThreeLetterQuiz> {
   void getWords() async {
     // TODO: Make Clabbers logo
     // TODO: add a loading screen after 2 press
+    var d = new csvAuto.FirstOccurrenceSettingsDetector(eols: ['\r\n', '\n']);
     final x = await rootBundle.loadString("assets/csvfile/threes.csv");
     setState(() {
-      allWords = const CsvToListConverter().convert(x);
+      allWords = CsvToListConverter(csvSettingsDetector: d).convert(x);
       allWords.shuffle();
       // print(allWords);
       allWords.forEach((element) {

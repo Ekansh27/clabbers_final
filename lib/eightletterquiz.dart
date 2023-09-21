@@ -1,10 +1,12 @@
 import 'dart:convert';
+
 import 'package:clabbers/quote_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scrabble/scrabble.dart';
 import 'package:csv/csv.dart';
 import 'package:collection/collection.dart';
+import 'package:csv/csv_settings_autodetection.dart' as csvAuto;
 import 'dart:math';
 
 void main() {
@@ -54,9 +56,10 @@ class _EightLetterQuizState extends State<EightLetterQuiz> {
   void getWords() async {
     // TODO: Make Clabbers logo
     // TODO: add a loading screen after 2 press
+    var d = new csvAuto.FirstOccurrenceSettingsDetector(eols: ['\r\n', '\n']);
     final x = await rootBundle.loadString("assets/csvfile/eights.csv");
     setState(() {
-      allWords = const CsvToListConverter().convert(x);
+      allWords = CsvToListConverter(csvSettingsDetector: d).convert(x);
       allWords.shuffle();
       allWords.forEach((element) {
         definitions[element[0].toString()] = element[1].toString();

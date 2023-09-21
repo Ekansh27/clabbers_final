@@ -3,6 +3,8 @@ import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
+import 'package:csv/csv_settings_autodetection.dart' as csvAuto;
+import 'dart:math';
 
 import 'package:scrabble/scrabble.dart';
 
@@ -54,9 +56,10 @@ class _TextEditingControllerExampleState extends State<TextEditingControllerExam
   void getWords() async {
     // TODO: Make Clabbers logo
     // TODO: add a loading screen after 2 press
+    var d = new csvAuto.FirstOccurrenceSettingsDetector(eols: ['\r\n', '\n']);
     final x = await rootBundle.loadString("assets/csvfile/all_words.csv");
     setState(() {
-      allWords = const CsvToListConverter().convert(x);
+      allWords = CsvToListConverter(csvSettingsDetector: d).convert(x);
       allWords.forEach((element) {
         definitions[element[0].toString()] = element[1].toString();
       });
