@@ -89,7 +89,9 @@ class _SplashState extends State<Splash> {
                     Text('CLABBERS',
                         style: TextStyle(
                             fontFamily: 'JuliusSansOne',
-                            fontWeight: FontWeight.bold)),
+                            fontWeight: FontWeight.bold,
+                        color: Colors.black)
+                    ),
                     SizedBox(
                       height: 15.0,
                     ),

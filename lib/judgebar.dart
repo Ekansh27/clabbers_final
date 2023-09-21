@@ -74,25 +74,38 @@ class _TextEditingControllerExampleState extends State<TextEditingControllerExam
   }
 
   _scrabfunc(csvlistcheck) async {
-
-    // if (_wordController.text.trim().isEmpty) {
-    //   return; // Exit early if it's blank or empty
-    // }
-    if (csvlistcheck.contains(_wordController.text.toUpperCase())) {
-      // print(_wordController.text + " word exists");
-      setState(() {
-        check = true;
-      });
-      word_index = csvlistcheck.indexOf(_wordController.text);
-      print(word_index);
-    }
-     else {
-      setState(() {
-        check = false;
-      });
-      print(_wordController.text + " word does not exists");
+    if (_wordController.text.isEmpty) {
+      return;
     }
 
+    final inputText = _wordController.text.trim();
+    final words = inputText.split(RegExp(r'\s+'));
+
+    bool allWordsExist = true;
+
+    setState(() {
+      check = false; // Initialize check to false
+    });
+
+    print(words);
+
+    for (final word in words) {
+      final trimmedWord = word.trim(); // Trim the word
+      if (!csvlistcheck.contains(trimmedWord.toUpperCase())) {
+        allWordsExist = false;
+        print(word + " word exists");
+        break;
+      }
+    }
+    setState(() {
+      check = allWordsExist; // Set check based on the flag
+    });
+
+    if (allWordsExist) {
+      // All words exist, find the index of the first word
+      word_index = csvlistcheck.indexOf(words.first);
+      print("All words exist");
+    }
   }
 
   @override
@@ -101,7 +114,7 @@ class _TextEditingControllerExampleState extends State<TextEditingControllerExam
       appBar: AppBar(
         title: const Text(
           'Judge', style: TextStyle(
-          fontWeight: FontWeight.bold, fontSize: 25.0
+            fontWeight: FontWeight.bold, fontSize: 25.0
         ) ,
         ),
         backgroundColor: const Color(0xff6d3fa4),
@@ -265,10 +278,12 @@ class _TextEditingControllerExampleState extends State<TextEditingControllerExam
             FloatingActionButton(
               onPressed: () {
                 _loadQuestions();
+                List<String> words = _wordController.text.split(' ').where((word) => word.isNotEmpty).toList();
                 showDialog(
                     context: context,
                     builder: (context)=>
                     check == true?
+
                     AlertDialog(
                       content: Container(
                         height: 80,
@@ -277,7 +292,7 @@ class _TextEditingControllerExampleState extends State<TextEditingControllerExam
                             children: [
                               Icon(Icons.check_circle, size: 45.0, color: Colors.green,),
                               SizedBox(height: 10,),
-                              Text(_wordController.text, style: TextStyle(fontSize: 20.0, ),),
+                              Text(words.join(', '), style: TextStyle(fontSize: 20.0, ),),
                               // Text(definition),
                             ],
                           ),
@@ -295,7 +310,7 @@ class _TextEditingControllerExampleState extends State<TextEditingControllerExam
                             children: [
                               const Icon(Icons.sms_failed_outlined, size: 45.0, color: Colors. red),
                               SizedBox(height: 10,),
-                              Text(_wordController.text, style: const TextStyle(fontSize: 20.0, ),),
+                              Text(words.join(', '), style: const TextStyle(fontSize: 20.0, ),),
                             ],
                           ),
                         ),

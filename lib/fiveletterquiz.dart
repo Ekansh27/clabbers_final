@@ -427,7 +427,7 @@ class _FiveLetterQuizState extends State<FiveLetterQuiz> {
           ),
           Row(
             children: [
-              SizedBox(width: MediaQuery.of(context).size.width / 4.1),
+              SizedBox(width: MediaQuery.of(context).size.width / 4.8),
               Visibility(
                 visible: i < 19, // Change this condition based on your requirements
                 child: Row(

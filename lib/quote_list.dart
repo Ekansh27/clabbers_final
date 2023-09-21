@@ -210,7 +210,7 @@ class _QuoteListState extends State<QuoteList> {
       body: Center(
         child: Container(
           width: 315,
-          height: 600,
+          height: 550,
           child: Row(
             children: [
               Padding(
